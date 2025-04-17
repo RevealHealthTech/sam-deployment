@@ -1,0 +1,5 @@
+fastapi==0.104.0
+uvicorn==0.23.2
+boto3==1.28.0
+moto==4.2.5
+mangum==0.17.0 
