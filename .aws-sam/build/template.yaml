@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: FastAPI Presign Service
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 128
+    Architectures:
+    - x86_64
+Resources:
+  FastAPIFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      DockerContext: /Users/pushkar.anand/demo_fastapi
+      DockerTag: latest
+      Dockerfile: Dockerfile.lambda
+      SamResourceId: FastAPIFunction
+    Properties:
+      PackageType: Image
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+      Environment:
+        Variables:
+          MOCK_BUCKET_NAME: mock-bucket
+          MOCK_REGION: us-east-1
+      ImageUri: fastapifunction:latest
+Outputs:
+  FastAPIFunction:
+    Description: Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - FastAPIFunction
+      - Arn
+  FastAPIApi:
+    Description: API Gateway endpoint URL
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/

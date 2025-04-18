@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "docker-lambda-deploy"
+resolve_s3 = true
+s3_prefix = "docker-lambda-deploy"
+region = "ap-south-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = ["FastAPIFunction=921081371321.dkr.ecr.ap-south-1.amazonaws.com/dockerlambdadeploymentb24c0548/fastapifunctionead79d0drepo"]
